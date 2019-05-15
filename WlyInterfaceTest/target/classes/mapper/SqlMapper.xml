@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.nanruan.dao.mapper.ISqlMapper">
+    <resultMap id="resultList" type="com.nanruan.model.OrderIndex"></resultMap>
+    <!-- 查询公司下所有待调度长途订单 -->
+    <select id="queryLongDistance" resultMap="resultList" parameterType="int">
+        select * from tms_orderIndex as A
+                          INNER JOIN   TMS_OrderIndexCaches AS C  ON A.index_id=c.Caches_OrderID
+        where A.Index_CreatorCompanyID = #{companyID}
+          AND  A.Index_SupplierCompanyID = 0
+          AND  A.Index_SrcClass = 2
+          AND  A.Index_Status = 1
+          AND  A.Index_Invalid = 0
+          AND  A.Index_ShipMode = 2
+          AND  A.Index_Combined = 0
+    </select>
+
+    <!--查公司下发货日期为当月的长途待调度订单-->
+    <select id="queryLongDistanceCurMonth" resultMap="resultList" parameterType="int">
+        select * from tms_orderIndex as A
+                          INNER JOIN   TMS_OrderIndexCaches AS C  ON A.index_id=c.Caches_OrderID
+        where A.Index_CreatorCompanyID = #{companyID}
+          AND  A.Index_SupplierCompanyID = 0
+          AND  A.Index_SrcClass = 2
+          AND  A.Index_Status = 1
+          AND  A.Index_Invalid = 0
+          AND  A.Index_ShipMode = 2
+          AND  A.Index_Combined = 0
+          and  DATEDIFF(m,A.Index_FromTime,GETDATE())=0
+    </select>
+
+    <!-- 按照ID查询 -->
+    <select id="queryIndexById" parameterType="int" resultType="com.nanruan.model.OrderIndex">
+        select * from TMS_OrderIndex where Index_ID=#{indexID}
+    </select>
+
+    <!--查询接收后生成的订单-->
+    <select id="queryIndexBySupplierOrderID" parameterType="com.nanruan.model.OrderIndex" resultType="com.nanruan.model.OrderIndex">
+        select * from TMS_OrderIndex where Index_ID=#{Index_ID} and Index_SrcOrderID=#{Index_SrcOrderID}
+    </select>
+
+    <!--查询公司下待调度拼车单-->
+    <select id="getCarSharing" resultMap="resultList" parameterType="int">
+        SELECT * from tms_orderindex where  Index_CreatorCompanyID = #{companyID}
+        AND Index_SrcClass = 3
+        AND Index_Status = 0
+        AND Index_Status &lt;  32
+        AND Index_Invalid = 0
+    </select>
+    <!--&lt;!&ndash; 添加订单 &ndash;&gt;-->
+    <!--<insert id="insertIndex" parameterType="com.nanruan.model.OrderIndex">-->
+        <!--insert into TMS_OrderIndex values(#{userName},#{password},#{trueName},#{email},#{phone},#{sex},#{group_id})-->
+    <!--</insert>-->
+    <!--&lt;!&ndash; 修改订单 &ndash;&gt;-->
+    <!--<update id="updateIndex" parameterType="com.nanruan.model.OrderIndex">-->
+        <!--update TMS_OrderIndex set password=#{password},phone=#{phone} where  Index_ID=#{Index_ID}-->
+    <!--</update>-->
+    <!--&lt;!&ndash; 删除订单 &ndash;&gt;-->
+    <!--<delete id="deleteIndex" parameterType="com.nanruan.model.OrderIndex">-->
+        <!--delete  TMS_OrderIndex where Index_ID=#{Index_ID}-->
+    <!--</delete>-->
+</mapper>

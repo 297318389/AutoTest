@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="运输系统测试套件" preserve-order="true">
+    <test name="运输系统测试" preserve-order="true">
+        <classes>
+            <!-- 登录 -->
+            <class name="com.nanruan.cases.LoginTest">
+                <methods>
+                    <include name="loginTrue" />
+                    <include name="loginCYTest" />
+                </methods>
+            </class>
+            <!-- 创建订单 -->
+            <class name="com.nanruan.cases.tms.AddorderTest">
+                <methods>
+                    <include name="addOrderTest" />
+                    <include name="checkTest"/>
+                    <include name="checktrackingTest"/>
+                </methods>
+            </class>
+            <!--  调度 -->
+            <class name="com.nanruan.cases.tms.DispatchTest">
+                <methods>
+                    <include name="longDispatchTest"/>
+                    <include name="dispathcTest"/>
+                    <include name="entrustTest"/>
+                    <include name="longDispatchTest1"/>
+                    <include name="combineOrdersTest"/>
+                    <include name="carSharingTest"/>
+                    <include name="combineSendTest"/>
+                    <include name="consignmentOrderTest"/>
+                </methods>
+            </class>
+            <!-- 接收 -->
+            <class name="com.nanruan.cases.tms.ReceiveTest">
+                <methods>
+                    <!-- <include name="supplierLoginTest"/> -->
+                     <include name="receiveTest"/>
+                     <include name="orderacceptedlistTest"/>
+                     <include name="receiveCombineOrdersTest"/>
+                     <include name="orderacceptedcarlistTest"/>
+                     <include name="orderacceptedcarTest"/>
+                 </methods>
+             </class>
+            <!-- 拆单
+            <class name="com.nanruan.cases.tms.UrbanTest">
+                <methods>
+                    <include name="receiveTest"/>
+                </methods>
+            </class>-->
+            <!-- 签收 -->
+             <class name="com.nanruan.cases.tms.SignManageTest">
+                 <methods>
+                     <include name="checktrackingTest"/>
+                     <include name="signManageListTest"/>
+                     <include name="signTest"/>
+                 </methods>
+             </class>
+         </classes>
+     </test>
+     <listeners>
+         <listener class-name="com.nanruan.utils.ExtentTestNGIReporterListener" />
+     </listeners>
+
+ </suite>

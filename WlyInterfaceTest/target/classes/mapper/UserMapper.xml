@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.nanruan.model.user">
+    <!-- 查询全部用户 -->
+    <select id="queryUsers" resultType="com.tenghu.object.Users">
+        select * from tb_users
+    </select>
+    <!-- 按照ID查询 -->
+    <select id="queryUsersId" parameterType="int" resultType="com.tenghu.object.Users">
+        select * from tb_users where id=#{id}
+    </select>
+    <!-- 添加用户 -->
+    <insert id="insertUsers" parameterType="com.tenghu.object.Users">
+        insert into tb_users values(#{userName},#{password},#{trueName},#{email},#{phone},#{sex},#{group_id})
+    </insert>
+    <!-- 修改用户 -->
+    <update id="updateUsers" parameterType="com.tenghu.object.Users">
+        update tb_users set password=#{password},phone=#{phone} where id=#{id}
+    </update>
+    <!-- 删除用户 -->
+    <delete id="deleteUsers" parameterType="com.tenghu.object.Users">
+        delete  tb_users where id=#{id}
+    </delete>
+</mapper>
